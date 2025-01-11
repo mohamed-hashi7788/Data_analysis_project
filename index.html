@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analysis Project</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: url('R.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            overflow-y: auto; /* Allows vertical scrolling */
+        }
+        h1, h2 {
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px auto;
+            width: 80%;
+            color: white;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            background-color: rgba(255, 99, 71, 0.9);
+            font-size: 36px;
+            clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+        }
+        h2 {
+            background-color: rgba(60, 179, 113, 0.9);
+            font-size: 28px;
+            clip-path: polygon(10% 0, 90% 0, 100% 100%, 0% 100%);
+        }
+        p {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 30px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            display: inline-block;
+        }
+        .graphs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            justify-items: center;
+        }
+        img {
+            width: 100%;
+            max-width: 300px;
+            transition: transform 0.3s ease;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+        }
+        .graphs img:nth-child(1) {
+            background-color: rgba(255, 255, 0, 0.9);
+            border: 4px solid #FFD700;
+        }
+        .graphs img:nth-child(2) {
+            background-color: rgba(173, 216, 230, 0.9);
+            border: 4px solid #00BFFF;
+        }
+        .graphs img:nth-child(3) {
+            background-color: rgba(144, 238, 144, 0.9);
+            border: 4px solid #32CD32;
+        }
+        .graphs img:nth-child(4) {
+            background-color: rgba(255, 182, 193, 0.9);
+            border: 4px solid #FF69B4;
+        }
+        img:hover {
+            transform: scale(1.1);
+        }
+        .file-actions {
+            margin: 30px 0;
+        }
+        .file-actions a, .file-actions button {
+            text-decoration: none;
+            color: white;
+            background-color: rgba(40, 167, 69, 0.8);
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+            transition: background-color 0.3s ease;
+            margin: 0 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .file-actions a:hover, .file-actions button:hover {
+            background-color: rgba(33, 136, 56, 0.8);
+        }
+        .file-viewer {
+            display: none;
+            margin-top: 20px;
+        }
+        .file-viewer img {
+            width: 80%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+            background-color: white;
+        }
+        .drop-data-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 140, 0, 0.8);
+            padding: 3px 7px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-size: 10px;
+            z-index: 2;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+        }
+        .drop-data-btn:hover {
+            background-color: rgba(255, 165, 0, 0.8);
+        }
+        .follower {
+            position: fixed;
+            top: -40px;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: black;
+            font-size: 14px;
+            line-height: 30px;
+            text-align: center;
+            border: 2px solid rgba(0, 0, 0, 0.8);
+            border-radius: 50%;
+            z-index: 0;
+            animation: fall 3s forwards;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        .bottom-data-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 0;
+            z-index: 3;
+        }
+        .bottom-data-bar span {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 0 5px;
+            color: white;
+            font-size: 14px;
+            background-color: rgba(255, 99, 71, 0.8);
+            border-radius: 5px;
+            animation: move 10s linear infinite;
+        }
+        .bottom-data-bar span:nth-child(even) {
+            background-color: rgba(60, 179, 113, 0.8);
+        }
+        .bottom-data-bar span:nth-child(odd) {
+            background-color: rgba(173, 216, 230, 0.8);
+        }
+        @keyframes move {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="drop-data-btn" onclick="releaseData()">Drop Data</button>
+    
+    <h1>Data Analysis Project</h1>
+    <p>This project demonstrates data analysis using R with various graphical representations.</p>
+    
+    <h2>Graphs</h2>
+    <div class="graphs">
+        <img src="bar_plot.png" alt="Bar Plot">
+        <img src="scatter_plot.png" alt="Scatter Plot">
+        <img src="histogram.png" alt="Histogram">
+        <img src="box_plot.png" alt="Box Plot">
+    </div>
+
+    <div class="file-actions">
+        <a href="simple_data.xlsx" download>Download Excel File</a>
+        <button onclick="viewFile()">View File</button>
+    </div>
+
+    <div class="file-viewer" id="fileViewer">
+        <img src="data.png" alt="Data">
+    </div>
+
+    <div class="bottom-data-bar">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>90</span>
+    </div>
+
+    <script>
+        let dataInterval;
+
+        function releaseData() {
+            const numFollowers = 100;
+            document.querySelectorAll('.follower').forEach(follower => follower.remove());
+
+            for (let i = 0; i < numFollowers; i++) {
+                let follower = document.createElement('div');
+                follower.classList.add('follower');
+                follower.style.left = Math.random() * window.innerWidth + 'px';
+                follower.style.animationDelay = Math.random() * 2 + 's';
+                follower.textContent = Math.floor(Math.random() * 100);
+                document.body.appendChild(follower);
+            }
+
+            clearTimeout(dataInterval);
+            dataInterval = setTimeout(() => {
+                document.querySelectorAll('.follower').forEach(follower => follower.remove());
+            }, 5000);
+        }
+
+        function viewFile() {
+            document.getElementById('fileViewer').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
